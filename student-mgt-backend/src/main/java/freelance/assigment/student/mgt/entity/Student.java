@@ -1,7 +1,9 @@
 package freelance.assigment.student.mgt.entity;
 import freelance.assigment.student.mgt.shared.audit.Audit;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,13 +40,17 @@ public class Student extends Audit {
 
     private Date dateOfBirth;
 
+    @NotEmpty
+    @Size(max = 100)
     private String firstName;
 
-
+    @NotEmpty
+    @Size(max = 100)
     private String lastName;
 
 
-
+    @NotBlank
+    @Email(message = "Email is not valid")
     private String email;
 
     private String mobilePhone;
