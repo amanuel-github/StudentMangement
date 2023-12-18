@@ -1,17 +1,13 @@
 package freelance.assigment.student.mgt.entity;
 import freelance.assigment.student.mgt.shared.audit.Audit;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.*;
-
-import jakarta.validation.constraints.Size;
 
 @Entity
 @Setter
@@ -37,7 +33,7 @@ public class Student extends Audit {
             inverseJoinColumns = @JoinColumn(name = "courseUuid"))
     Set<Course> takenCourses = new HashSet<>();
 
-
+    @Past(message = "date must be in the past")
     private Date dateOfBirth;
 
     @NotEmpty
