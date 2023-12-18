@@ -1,13 +1,14 @@
 package freelance.assigment.student.mgt.entity;
+import freelance.assigment.student.mgt.shared.audit.Audit;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+
+import java.util.*;
+
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -16,37 +17,38 @@ import jakarta.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "students" ,uniqueConstraints = { @UniqueConstraint(columnNames = "email"),
-        @UniqueConstraint(columnNames = "studentUuid"), @UniqueConstraint(columnNames = "mobilePhone")}
+        }
 
 )
-public class Student {
+public class Student extends Audit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(min = 36, max = 40)
+
     private String  studentUuid = UUID.randomUUID().toString();
 
-    @Column(name = "Dob" , nullable = false, length=100)
-    private String dateOfBirth;
+       @ManyToMany
+       @JoinTable(
+            name = "student_course",
+            joinColumns = @JoinColumn(name = "studentUuid"),
+            inverseJoinColumns = @JoinColumn(name = "courseUuid"))
+    Set<Course> takenCourses = new HashSet<>();
 
-    @NotBlank
-    @Column(name = "first_name")
+
+    private Date dateOfBirth;
+
     private String firstName;
 
-    @NotBlank
-    @Column(name = "last_name")
+
     private String lastName;
 
-    @OneToMany(mappedBy = "student",cascade = CascadeType.ALL)
-    private List<Address> address = new ArrayList<>();
 
-    @NotBlank
-    @Column(name = "email")
+
     private String email;
 
-    @NotBlank
     private String mobilePhone;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")

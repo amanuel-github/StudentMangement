@@ -6,9 +6,12 @@ public class StudentMapper {
     public static StudentDto mapToStudentDto(Student student) {
         return new StudentDto(
           student.getId(),
-          student.getFirstName(),
+                student.getFirstName(),
+          student.getStudentUuid(),
+          student.getDateOfBirth(),
           student.getLastName(),
           student.getEmail(),
+                student.getMobilePhone(),
           student.getDepartment().getId()
         );
     }

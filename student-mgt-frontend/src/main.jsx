@@ -7,8 +7,6 @@ import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 
-const store = createStore();
-
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ToastContainer />
